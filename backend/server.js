@@ -1,10 +1,14 @@
 import express from 'express';
 import products from './data/products.js';
 import dotenv from 'dotenv';
+import connectDB from './config/db.js';
 
 const app = express();
 
 dotenv.config();
+
+//Conect to database
+connectDB();
 
 //Route
 app.get('/', (req, res) => {
