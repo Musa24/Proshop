@@ -1,0 +1,16 @@
+{
+  "name": "proshop",
+  "version": "1.0.0",
+  "description": "ProShop Application",
+  "main": "server.js",
+  "module":"system",
+  "scripts": {
+    "start": "nodemon  backend/server"
+
+  },
+  "author": "Musa24",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
