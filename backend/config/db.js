@@ -8,7 +8,7 @@ const connectDB = async () => {
       useFindAndModify: false,
       useCreateIndex: true,
     });
-    console.log('Server is connected');
+    console.log('Database is connected');
   } catch (error) {
     console.log(error);
   }

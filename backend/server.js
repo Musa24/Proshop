@@ -7,7 +7,8 @@ const app = express();
 
 dotenv.config();
 
-//Routes
+//error middleware
+import { notFound, errorHandler } from './middlewares/errorMiddleware.js';
 
 //Conect to database
 connectDB();
@@ -19,6 +20,10 @@ app.get('/', (req, res) => {
 
 // routes middleware
 app.use('/api/products', productRoutes);
+
+//ERROR middleware
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 const mode = process.env.NODE_ENV;
