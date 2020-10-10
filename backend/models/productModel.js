@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const reviewSchema = new Schema(
   {
     name: {
-      type: Sting,
+      type: String,
       required: true,
     },
     rating: {
@@ -12,7 +12,7 @@ const reviewSchema = new Schema(
       required: true,
     },
     comment: {
-      type: Sting,
+      type: String,
       required: true,
     },
   },
