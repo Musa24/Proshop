@@ -5,6 +5,7 @@ import Header from './components/Header';
 import HomeScreen from './screens/HomeScreen';
 import { Route } from 'react-router-dom';
 import ProductScreen from './screens/ProductScreen';
+import CartScreen from './screens/CartScreen';
 
 function App() {
   return (
@@ -16,6 +17,8 @@ function App() {
           <Route path="/product/:id" exact>
             <ProductScreen />
           </Route>
+          {/* The id will be option */}
+          <Route exact path="/cart/:id?" component={CartScreen} />
         </Container>
       </main>
       <Footer />
