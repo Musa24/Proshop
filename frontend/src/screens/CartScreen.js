@@ -10,7 +10,7 @@ import {
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useParams } from 'react-router-dom';
-import { addToCart } from '../actions/cartActions';
+import { addToCart, removeFromCart } from '../actions/cartActions';
 import Message from '../components/Message';
 
 function CartScreen() {
@@ -25,9 +25,11 @@ function CartScreen() {
     if (id) {
       dispatch(addToCart(id, qty));
     }
-  }, [dispatch, id]);
+  }, [dispatch, id, qty]);
 
-  const removeFromCartHandler = () => {};
+  const removeFromCartHandler = (id) => {
+    dispatch(removeFromCart(id));
+  };
   const checkoutHandler = () => {};
 
   return (
@@ -78,7 +80,7 @@ function CartScreen() {
                     <Button
                       type="button"
                       variant="light"
-                      onClick={removeFromCartHandler}
+                      onClick={() => removeFromCartHandler(cartItem.product)}
                     >
                       <i className="fas fa-trash"></i>
                     </Button>
