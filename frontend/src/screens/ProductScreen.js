@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { listProductDetails } from '../actions/productActions';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
-import { addToCart } from '../actions/cartActions';
 
 function ProductScreen() {
   const [qty, setQty] = useState(1);
@@ -29,8 +28,6 @@ function ProductScreen() {
   }, [dispatch, id]);
 
   const addToCartHandler = () => {
-    dispatch(addToCart(id, qty));
-
     history.push(`/cart/${id}?qty=${qty}`);
   };
 
