@@ -2,9 +2,12 @@ import express from 'express';
 import dotenv from 'dotenv';
 import connectDB from './config/db.js';
 import productRoutes from './routes/productRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 const app = express();
 
+//BodyParser middleware
+app.use(express.json());
 dotenv.config();
 
 //error middleware
@@ -20,6 +23,7 @@ app.get('/', (req, res) => {
 
 // routes middleware
 app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 
 //ERROR middleware
 app.use(notFound);
