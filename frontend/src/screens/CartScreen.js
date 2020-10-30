@@ -9,7 +9,7 @@ import {
   Card,
 } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import { addToCart, removeFromCart } from '../actions/cartActions';
 import Message from '../components/Message';
 
@@ -17,6 +17,9 @@ function CartScreen() {
   const { id } = useParams('id');
   const location = useLocation();
   const dispatch = useDispatch();
+  const history = useHistory();
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
   const qty = location.search ? Number(location.search.split('=')[1]) : 1;
 
   const { cartItems } = useSelector((state) => state.cart);
@@ -30,7 +33,13 @@ function CartScreen() {
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
   };
-  const checkoutHandler = () => {};
+  const checkoutHandler = () => {
+    if (userInfo) {
+      history.push('/shipping');
+    } else {
+      history.push('/login');
+    }
+  };
 
   return (
     <Row>
