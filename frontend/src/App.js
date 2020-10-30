@@ -20,7 +20,7 @@ function App() {
         <Container>
           <Route exact path="/" component={HomeScreen} />
           <Route exact path="/shipping" component={ShippingScreen} />
-          <Route exact path="/shipping" component={PaymentScreen} />
+          {/* <Route exact path="/payment" component={PaymentScreen} /> */}
 
           <Route path="/product/:id" exact>
             <ProductScreen />
