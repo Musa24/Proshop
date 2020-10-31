@@ -1,19 +1,18 @@
 import asyncHandler from 'express-async-handler';
-import { Error } from 'mongoose';
 import Order from '../models/orderModel.js';
 
 //@Desc   Create new order
 //@route POST /api/orders
 // @access public
 const addOrderItems = asyncHandler(async (req, res) => {
-  console.log(req.body);
   const {
     orderItems,
     shippingAddress,
     paymentMethod,
-    itemPrice,
+    itemsPrice,
     shippingPrice,
     totalPrice,
+    taxPrice,
   } = req.body;
 
   if (orderItems && orderItems.length === 0) {
@@ -26,9 +25,10 @@ const addOrderItems = asyncHandler(async (req, res) => {
       user: req.user._id,
       shippingAddress,
       paymentMethod,
-      itemPrice,
+      itemsPrice,
       shippingPrice,
       totalPrice,
+      taxPrice,
     });
     const createdOrder = await order.save();
     res.status(201).json(createdOrder);
