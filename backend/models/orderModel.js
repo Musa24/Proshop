@@ -62,11 +62,6 @@ const orderSchema = new Schema(
       required: true,
       default: false,
     },
-    isPaid: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
     paidAt: {
       type: Date,
     },
