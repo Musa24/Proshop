@@ -22,6 +22,10 @@ app.get('/', (req, res) => {
   res.send('APP is running');
 });
 
+app.get('/api/config/paypal', (req, res) =>
+  res.send(process.env.PAYPAL_CLIENT_ID)
+);
+
 // routes middleware
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
