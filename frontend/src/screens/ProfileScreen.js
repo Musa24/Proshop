@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form, Col, Row } from 'react-bootstrap';
+import { Button, Form, Col, Row, Table } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserDetails, updateUserProfile } from '../actions/userActions';
 import Message from '../components/Message';
+import Loader from '../components/Loader';
+import { listMyOrder } from '../actions/orderActions';
+import { LinkContainer } from 'react-router-bootstrap';
 
 function ProfileScreen() {
   const [name, setName] = useState('');
@@ -23,12 +26,16 @@ function ProfileScreen() {
 
   // const userUpdateProfile = useSelector((state) => state.userUpdateProfile);
   // const { success } = userUpdateProfile;
+  const orderListMy = useSelector((state) => state.orderListMy);
+  const { loading: loadingOrders, error: errorOrders, orders } = orderListMy;
+
   useEffect(() => {
     if (!userInfo) {
       history.push('/login');
     } else {
       if (!user.name) {
         dispatch(getUserDetails('profile'));
+        dispatch(listMyOrder());
       } else {
         setName(user.name);
         setEmail(user.email);
@@ -42,7 +49,6 @@ function ProfileScreen() {
       setMessage('Passwords do not match');
     } else {
       //dispatch update profile
-
       dispatch(updateUserProfile({ id: user._id, name, email, password }));
       setSucessfullyUpdate(true);
       setTimeout(() => {
@@ -53,7 +59,7 @@ function ProfileScreen() {
 
   return (
     <Row>
-      <Col md={4}>
+      <Col md={3}>
         <h2>User Profile</h2>
         {message && <Message variant="danger">{message}</Message>}
         {error && <Message variant="danger">{error}</Message>}
@@ -102,7 +108,57 @@ function ProfileScreen() {
           </Button>
         </Form>
       </Col>
-      <Col md={8}>Hello</Col>
+      <Col md={9}>
+        <h2>My Orders</h2>
+        {loadingOrders ? (
+          <Loader />
+        ) : errorOrders ? (
+          <Message variant="danger">{errorOrders}</Message>
+        ) : (
+          <Table striped bordered responsive className="table-sm">
+            <thead>
+              <tr>
+                <td>ID</td>
+                <td>DATE</td>
+                <td>TOTAL</td>
+                <td>PAID</td>
+                <td>DELIVERED</td>
+                <td></td>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order) => (
+                <tr key={order._id}>
+                  <td>{order._id}</td>
+                  <td>{order.createdAt.substring(0, 10)}</td>
+                  <td>{order.totalPrice}</td>
+                  <td>
+                    {order.isPaid ? (
+                      order.paidAt.substring(0, 10)
+                    ) : (
+                      <i className="fas fa-times" style={{ color: 'red' }}></i>
+                    )}
+                  </td>
+                  <td>
+                    {order.isDelivered ? (
+                      order.deliveredAt.substring(0, 10)
+                    ) : (
+                      <i className="fas fa-times" style={{ color: 'red' }}></i>
+                    )}
+                  </td>
+                  <td>
+                    <LinkContainer to={`/order/${order._id}`}>
+                      <Button className="btn-sm" variant="light">
+                        Details
+                      </Button>
+                    </LinkContainer>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        )}
+      </Col>
     </Row>
   );
 }

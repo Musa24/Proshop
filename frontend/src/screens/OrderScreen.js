@@ -7,6 +7,7 @@ import Loader from '../components/Loader';
 import { Link, useParams } from 'react-router-dom';
 import { getOrderDetails, payOrder } from '../actions/orderActions';
 import { PayPalButton } from 'react-paypal-button-v2';
+import { ORDER_PAY_RESET } from '../constants/orderConstants';
 
 function OrderScreen() {
   const { id } = useParams('id');
@@ -28,7 +29,7 @@ function OrderScreen() {
       //create a script
       const script = document.createElement('script');
       script.type = 'text/javascript';
-      script.src = `https://paypal.com/sdk/js?client-id=${cliendId}`;
+      script.src = `https://www.paypal.com/sdk/js?client-id=${cliendId}`;
       script.async = true;
       // Once it is loaded
       script.onload = () => {
@@ -39,11 +40,10 @@ function OrderScreen() {
     };
 
     if (!order || successPay) {
+      dispatch({ type: ORDER_PAY_RESET });
       dispatch(getOrderDetails(id));
     } else if (!order.isPaid) {
       if (!window.paypal) {
-        console.log('ONE', window);
-        console.log('TWO', window.paypal);
         addPayPalScript();
       } else {
         setSdkReady(true);
@@ -77,7 +77,7 @@ function OrderScreen() {
                 <a href={`mailto:${order.user.email}`}>{order.user.email}</a>
               </p>
               <p>
-                <strong>Address</strong>
+                <strong>Address:</strong>
                 {order.shippingAddress.address},{order.shippingAddress.city},
                 {order.shippingAddress.postalCode},
                 {order.shippingAddress.country}
@@ -172,7 +172,7 @@ function OrderScreen() {
               {!order.isPaid && (
                 <ListGroup.Item>
                   {loadingPay && <Loader />}
-                  {sdkReady ? (
+                  {!sdkReady ? (
                     <Loader />
                   ) : (
                     <PayPalButton
