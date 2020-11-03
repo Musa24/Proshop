@@ -99,4 +99,18 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
-export { authUser, getUserProfile, registerUser, updateUserProfile };
+//@Desc   Get All user
+//@route GET /api/users
+// @access Private/admin
+const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+
+  if (users) {
+    res.json(users);
+  } else {
+    res.status(404);
+    throw new Error('Users not found');
+  }
+});
+
+export { authUser, getUserProfile, registerUser, updateUserProfile, getUsers };
