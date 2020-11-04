@@ -2,17 +2,27 @@ import React, { useEffect } from 'react';
 import { Button, Table } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
+import { useHistory } from 'react-router-dom';
 import { listUsers } from '../actions/userActions';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 
 function UserListScreen() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const userList = useSelector((state) => state.userList);
   const { loading, users, error } = userList;
+
+  const userLogin = useSelector((state) => state.userLogin);
+  const { userInfo } = userLogin;
+
   useEffect(() => {
-    dispatch(listUsers());
-  }, [dispatch]);
+    if (userInfo && userInfo.isAdmin) {
+      dispatch(listUsers());
+    } else {
+      history.push('/login');
+    }
+  }, [dispatch, history, userInfo]);
 
   const deleteHandler = (id) => {
     console.log(id);
