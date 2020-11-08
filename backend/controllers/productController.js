@@ -42,11 +42,13 @@ const deleteProduct = asyncHandler(async (req, res) => {
 //@route POST /api/products
 // @access private/Admin
 const createProduct = asyncHandler(async (req, res) => {
+  const image =
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTBWTZWgZWTWeVQ-Czzk-7UJs-j5JbnrRH7eQ&usqp=CAU';
   const product = new Product({
     name: 'sample Name',
     price: 0,
     user: req.user._id,
-    image: '/image/sample.png',
+    image: image,
     brand: 'brand name',
     category: 'sample category',
     countInStock: 0,
