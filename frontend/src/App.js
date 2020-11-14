@@ -27,6 +27,12 @@ function App() {
         <Container>
           <Route exact path="/" component={HomeScreen} />
           <Route exact path="/search/:keyword" component={HomeScreen} />
+          <Route exact path="/page/:pageNumber" component={HomeScreen} />
+          <Route
+            exact
+            path="/search/:keyword/page/:pageNumber"
+            component={HomeScreen}
+          />
 
           <Route exact path="/shipping" component={ShippingScreen} />
           <Route exact path="/payment" component={PaymentScreen} />
@@ -55,6 +61,13 @@ function App() {
             path="/admin/productlist"
             component={ProductListScreen}
           />
+
+          <Route
+            exact
+            path="/admin/productlist/:pageNumber"
+            component={ProductListScreen}
+          />
+
           <Route exact path="/admin/orderList" component={OrderListScreen} />
         </Container>
       </main>
