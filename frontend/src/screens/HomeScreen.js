@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 import { Col, Row } from 'react-bootstrap';
 import Product from '../components/Product';
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,10 +10,12 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { useParams } from 'react-router-dom';
 import Paginate from '../components/Paginate';
+import ProductCarousel from '../components/ProductCarousel';
+import Meta from '../components/Meta';
 
 function HomeScreen() {
   const { keyword } = useParams('keyword');
-  const { pageNumber } = useParams('pageNumber');
+  const { pageNumber } = useParams('pageNumber') || 1;
 
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
@@ -23,7 +27,16 @@ function HomeScreen() {
 
   return (
     <>
+      <Meta />
       <h1>Latest Products</h1>
+      {!keyword ? (
+        <ProductCarousel />
+      ) : (
+        <Link to="/" className="btn btn-light">
+          Go Back
+        </Link>
+      )}
+
       {loading ? (
         <Loader />
       ) : error ? (

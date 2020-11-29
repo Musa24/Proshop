@@ -18,6 +18,7 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Rating from '../components/Rating';
 import { PRODUCT_CREATE_REVIEW_RESET } from '../constants/productConstant';
+import Meta from '../components/Meta';
 
 function ProductScreen() {
   const [qty, setQty] = useState(1);
@@ -79,6 +80,7 @@ function ProductScreen() {
         <Message variant="danger">{error}</Message>
       ) : (
         <>
+          <Meta title={product.name} />
           <Row>
             <Col md={6}>
               <Image src={image} alt={name} fluid />
